@@ -6,37 +6,48 @@ var roundScore;
 var scores;
 
 var diceDom = document.querySelector(".dice");
+var isNewGame;
 newGame();
 
 // doll dice button
 document.querySelector(".btn-roll").addEventListener("click", function () {
-  var diceNumber = Math.floor(Math.random() * 6) + 1;
-  diceDom.style.display = "block";
-  diceDom.src = "dice-" + diceNumber + ".png";
+  if (isNewGame === true) {
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
+    diceDom.style.display = "block";
+    diceDom.src = "dice-" + diceNumber + ".png";
 
-  if (diceNumber !== 1) {
-    roundScore += diceNumber;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
+    if (diceNumber !== 1) {
+      roundScore += diceNumber;
+      document.getElementById("current-" + activePlayer).textContent =
+        roundScore;
+    } else {
+      switchToNextPlayer();
+    }
   } else {
-    switchToNextPlayer();
+    alert("New Game дарж шинэ тоглоом эхлүүлнэ үү!");
   }
 });
 
 // hold buttone
 document.querySelector(".btn-hold").addEventListener("click", function () {
-  scores[activePlayer] += roundScore;
-  document.getElementById("score-" + activePlayer).textContent =
-    scores[activePlayer];
-  if (scores[activePlayer] >= 100) {
-    document.getElementById("name-" + activePlayer).textContent = "WINNER";
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("winner");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
+  if (isNewGame) {
+    scores[activePlayer] += roundScore;
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
+    if (scores[activePlayer] >= 100) {
+      isNewGame = false;
+      document.getElementById("name-" + activePlayer).textContent = "WINNER";
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+    } else {
+      switchToNextPlayer();
+    }
   } else {
-    switchToNextPlayer();
+    alert("New Game дарж шинэ тоглоом эхлүүлнэ үү!");
   }
 });
 
@@ -57,7 +68,7 @@ function newGame() {
   roundScore = 0;
 
   scores = [0, 0];
-
+  isNewGame = true;
   document.getElementById("name-0").textContent = "Player 1";
   document.getElementById("name-1").textContent = "Player 2";
 

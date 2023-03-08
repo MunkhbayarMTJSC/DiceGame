@@ -69,8 +69,8 @@ function newGame() {
 
   scores = [0, 0];
   isNewGame = true;
-  document.getElementById("name-0").textContent = "Player 1";
-  document.getElementById("name-1").textContent = "Player 2";
+  document.getElementById("name-0").textContent = "Нараа";
+  document.getElementById("name-1").textContent = "Мөөгий";
 
   document.querySelector(".player-0-panel").classList.remove("winner");
   document.querySelector(".player-0-panel").classList.remove("active");
